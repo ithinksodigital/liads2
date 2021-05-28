@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hays Job Ads generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+    <style>
+  @font-face {
+    font-family: 'Gotham Narrow';
+    src: local('Gotham Narrow'),
+         url('{% static 'fonts/GothamNarrowBold.otf' %}');
+  }
+
+* {
+    font-family: "Gotham Narrow";}
+</style>
+
+</head>
+
+
+
+<body>
+{% if user.is_authenticated %}
+
+<div class="row">
+  <div class="column" id="left">
+      <h2 class="text">LinkedIn Ads generator</h2>
+  </div>
+  <div class="column" id="right">
+      <div></div>
+      <img width="50%" style="padding-bottom: 20px"src="http://brandportal.haysplc.com/bc_hays/img/hays-logo-with-strap.png" alt="Hays logo"/>
+
+      <span style="padding-bottom: 10px; font-weight: bold " >Wybierz specjalizację</span>
+      {% for specialism in specialism_list %}
+            <a href="{% url 'specialism' specialism.id %}" ><button class="fill">{{ specialism.name }}</button></a>
+      {% endfor %}
+  </div>
+</div>
+{% else %}
+    <p>permission denied</p>
+
+{% endif %}
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ photo.specialism }}</title>
+    <script src={% static "js/html2canvas.js" %}></script>
+    <script src={% static "js/jquery.min.js" %}></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_create.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+
+
+
+</head>
+<script>$(div).on('paste', false);</script>
+<script>
+    $(document).ready(function(){
+	$(document).keydown(function(event) {
+	    	    if (event.ctrlKey==true && (event.which == '61' || event.which == '107' || event.which == '173' || event.which == '109'  || event.which == '187'  || event.which == '189'  ) ) {
+         alert('disabling zooming');
+		event.preventDefault();
+		// 107 Num Key  +
+		//109 Num Key  -
+		//173 Min Key  hyphen/underscor Hey
+		// 61 Plus key  +/=
+	     }
+	});
+
+	$(window).bind('mousewheel DOMMouseScroll', function (event) {
+	       if (event.ctrlKey == true) {
+           alert('disabling zooming');
+		   event.preventDefault();
+	       }
+	});
+});
+</script>
+
+<script>
+    $('div').on('paste',function(e) {
+    e.preventDefault();
+    return false;
+});
+</script>
+
+<script>
+  document.body.addEventListener("wheel", e=>{
+    if(e.ctrlKey)
+      event.preventDefault();//prevent zoom
+  });
+</script>
+<script>
+$(document).keydown(function(event) {
+if (event.ctrlKey==true && (event.which == '61' || event.which == '107' || event.which == '173' || event.which == '109'  || event.which == '187'  || event.which == '189'  ) ) {
+        event.preventDefault();
+     }
+    // 107 Num Key  +
+    // 109 Num Key  -
+    // 173 Min Key  hyphen/underscor Hey
+    // 61 Plus key  +/= key
+});
+
+$(window).bind('mousewheel DOMMouseScroll', function (event) {
+       if (event.ctrlKey == true) {
+       event.preventDefault();
+       }
+});
+</script>
+ <script>
+      document.firstElementChild.style.zoom = "reset";
+  </script>
+
+{% if user.is_authenticated %}
+
+
+<body>
+    <div class="alert">
+        <h2 style="color: #D61C83;">Proszę, powiększ okno przeglądarki.</h2>
+    </div>
+    <div class="wrapper">
+        <div id="capture"  style="width: 800px; height: 550px; background-image: url('{{ photo.background_file.url }}' );">
+            <div onkeypress="return (this.innerText.length <= 32)" class ="textArea editable" id="jobTitle" spellcheck="false" contentEditable>Wpisz nazwę stanowiska</div>
+            <div onkeypress="return (this.innerText.length <= 35)"class ="textArea editable" id="jobLocation" spellcheck="false" contentEditable>Wpisz lokalizację/ i wynagrodzenie</div>
+            <div class = "textArea editable" id="jobDescription"  onPaste="return false" spellcheck="false" contentEditable>Wpisz treść oferty</div>
+            <div class = "textArea editable" id="jobEmail" spellcheck="false" contentEditable>Aplikuj: wpisz swój adres e-mail</div>
+        </div>
+
+        <div class="job-ga-link-wrapper">
+            <div id="job-ga-link-expl"></div>
+            <div id="job-ga-link"></div>
+        </div>
+
+
+        <div class="form__group field">
+                                              <label for="name" class="form__label">Wpisz numer referencyjny ogłoszenia na Hays.pl</label>
+
+          <input type="input" class="form__field" placeholder="Name" name="name" id='jobId' required />
+
+
+        </div>
+
+            <button class="fill" onclick="catch_img()"><b>Pobierz grafikę</b></button>
+    </div>
+
+
+    <div class="icon-bar">
+      <a href="{% url 'specialism' specialism.id %}" class="step-back"><i class="fas fa-arrow-left"> </i></a><br/>
+      <a href="https://github.com/radipawelec"  target="_blank" class="step-back"><i class="fab fa-github"> </i></a>
+    </div>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+{% else %}
+    <p>permission denied</p>
+{% endif %}
+
+</body>
+</html>

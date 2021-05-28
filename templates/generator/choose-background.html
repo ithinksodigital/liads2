@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ specialism.specialism_name }} - Wybierz tło</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style_choose.css' %}">
+    <style>
+  @font-face {
+    font-family: 'Gotham Narrow';
+    src: local('Gotham Narrow'),
+         url('{% static 'fonts/GothamNarrow-Book.otf' %}');
+  }
+
+* {
+    font-family: "Gotham Narrow";}
+</style>
+
+</head>
+
+<body>
+{% if user.is_authenticated %}
+
+    <div style="height: 50px" class="icon-bar">
+        <a href="{% url 'home' %}" class="step-back"><i class="fas fa-arrow-left"></i></a><br />
+        <a href="https://github.com/radipawelec"  target="_blank" class="step-back"><i class="fab fa-github"> </i></a>
+    </div>
+    <div class="wrapper">
+        <form class="search-bar" method="get" action="{% url 'specialism' specialism.id %}">
+          <input name="q" type="search">
+          <i type="submit" class="fa fa-search"></i>
+        </form>
+        <section id="imgGrid">
+        {% for background in backgrounds %}
+            <div><a href="{% url 'create_photo' specialism.pk background.pk%}"><img  src="{{ background.background_file.url }}" alt=""></a></div>
+        {% endfor %}
+        </section>
+    </div>
+
+{% else %}
+    <p>permission denied</p>
+{% endif %}
+
+</body>
+</html>
